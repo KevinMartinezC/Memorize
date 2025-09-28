@@ -36,7 +36,7 @@ struct MemorizeView: View {
                         }
                 }
             }
-            .foregroundStyle(.orange)
+            .foregroundStyle(viewModel.currentSelectedTheme.color)
         }
     
     var title: some View {
