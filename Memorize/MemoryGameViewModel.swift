@@ -38,28 +38,29 @@ class MemoryGameViewModel: ObservableObject {
     private static func getEmojisForTheme(_ theme: Theme) -> [String] {
         switch theme {
         case .vehicles:
-            return vehicleEmojis
+            return vehicleEmojis.shuffled()
         case .animals:
-            return animalEmojis
+            return animalEmojis.shuffled()
         case .food:
-            return foodEmojis
+            return foodEmojis.shuffled()
         }
     }
     
     private static func getNumberOfPairsForTheme(_ theme: Theme) -> Int {
         switch theme {
         case .vehicles:
-            return 6
+            return  Int.random(in: 4...6)
         case .animals:
-            return 5
+            return Int.random(in: 5...8)
         case .food:
-            return 4
+            return Int.random(in: 3...6)
         }
     }
     
     var cards: Array<Card> {
         model.cards
     }
+    
     
     // MARK: - Intents
     
