@@ -35,4 +35,23 @@ enum Theme: CaseIterable {
         case .food: return .red
         }
     }
+    
+    var emojis: [String] {
+           switch self {
+           case .vehicles:
+               return ["🚗", "🚕", "🚙", "🚌", "🚎", "🏎️", "🚓", "🚑", "🚒", "🚐", "🛻", "🚚"]
+           case .animals:
+               return ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯"]
+           case .food:
+               return ["🍎", "🍌", "🍇", "🍓", "🍒", "🥝", "🍑", "🥭"]
+           }
+       }
+    
+    var pairRange: ClosedRange<Int>{
+        switch self {
+        case .vehicles: return 4...6
+        case .animals: return 5...8
+        case .food: return 3...6
+        }
+    }
 }

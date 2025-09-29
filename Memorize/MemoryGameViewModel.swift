@@ -10,10 +10,6 @@ import Combine
 class MemoryGameViewModel: ObservableObject {
     typealias Card = MemoryGame<String>.Card
     
-    private static let vehicleEmojis = ["🚗", "🚕", "🚙", "🚌", "🚎", "🏎️", "🚓", "🚑", "🚒", "🚐", "🛻", "🚚"]
-    private static let animalEmojis = ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯"]
-    private static let foodEmojis = ["🍎", "🍌", "🍇", "🍓", "🍒", "🥝", "🍑", "🥭"]
-    
     @Published private var model: MemoryGame<String>
     @Published var currentSelectedTheme: Theme
     
@@ -23,8 +19,8 @@ class MemoryGameViewModel: ObservableObject {
     }
     
     private static func createMemoryGame(theme: Theme) -> MemoryGame<String> {
-        let emojis = getEmojisForTheme(theme)
-        let numberOfPairs = getNumberOfPairsForTheme(theme)
+        let emojis = theme.emojis.shuffled()
+        let numberOfPairs = Int.random(in: theme.pairRange)
         
         return MemoryGame(numberOfPairsOfCards: numberOfPairs) { pairIndex in
             if emojis.indices.contains(pairIndex) {
@@ -32,28 +28,6 @@ class MemoryGameViewModel: ObservableObject {
             } else {
                 return "⁇"
             }
-        }
-    }
-    
-    private static func getEmojisForTheme(_ theme: Theme) -> [String] {
-        switch theme {
-        case .vehicles:
-            return vehicleEmojis.shuffled()
-        case .animals:
-            return animalEmojis.shuffled()
-        case .food:
-            return foodEmojis.shuffled()
-        }
-    }
-    
-    private static func getNumberOfPairsForTheme(_ theme: Theme) -> Int {
-        switch theme {
-        case .vehicles:
-            return  Int.random(in: 4...6)
-        case .animals:
-            return Int.random(in: 5...8)
-        case .food:
-            return Int.random(in: 3...6)
         }
     }
     
