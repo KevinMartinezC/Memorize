@@ -61,6 +61,19 @@ class MemoryGameViewModel: ObservableObject {
         model.cards
     }
     
+    var adaptiveCardWidth: CGFloat {
+        let cardCount = cards.count
+        
+        if cardCount <= 8 {
+            return 120
+        } else if cardCount <= 16 {
+            return 95
+        } else if cardCount <= 24 {
+            return 75
+        } else {
+            return 60
+        }
+    }
     
     // MARK: - Intents
     
