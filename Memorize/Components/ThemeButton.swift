@@ -15,6 +15,7 @@ struct ThemeButton: View {
         VStack {
             Image(systemName: theme.sfSymbol)
                 .font(.system(size: 30))
+            
             Text(theme.name)
                 .font(.caption)
         }

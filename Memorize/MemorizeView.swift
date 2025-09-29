@@ -15,9 +15,11 @@ struct MemorizeView: View {
             Text("Memorize!")
                 .font(.largeTitle)
                 .bold()
+            
             ScrollView{
                 cards
             }
+            
             themeButtons
         }
         .padding()

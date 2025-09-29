@@ -17,6 +17,7 @@ struct CardView: View {
             Group {
                 base.fill(.white)
                 base.strokeBorder(lineWidth: 2)
+                
                 Text(card.content)
                     .font(.system(size: 200))
                     .minimumScaleFactor(0.01)
