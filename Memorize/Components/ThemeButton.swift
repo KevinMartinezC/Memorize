@@ -19,8 +19,6 @@ struct ThemeButton: View {
                 .font(.caption)
         }
         .foregroundStyle(isSelected ? .blue : .gray)
-        .onTapGesture {
-            onTap()
-        }
+        .onTapGesture(perform: onTap)
     }
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MemorizeView: View {
-    @StateObject var viewModel: MemoryGameViewModel = .init()
+    @StateObject var viewModel: MemoryGameViewModel = .make()
     
     var body: some View {
         VStack{
@@ -25,10 +25,10 @@ struct MemorizeView: View {
     
     var cards: some View {
         LazyVGrid(
-            columns: [GridItem(.adaptive(minimum: viewModel.cards.count.adaptiveCardWidth), spacing: 0)],
+            columns: [GridItem(.adaptive(minimum: viewModel.game.cards.count.adaptiveCardWidth), spacing: 0)],
             spacing: 0
         ) {
-            ForEach(viewModel.cards) { card in
+            ForEach(viewModel.game.cards) { card in
                 CardView(card: card)
                     .aspectRatio(2/3, contentMode: .fit)
                     .padding(4)

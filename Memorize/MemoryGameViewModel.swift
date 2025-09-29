@@ -10,15 +10,31 @@ import Combine
 class MemoryGameViewModel: ObservableObject {
     typealias Card = MemoryGame<String>.Card
     
-    @Published private var model: MemoryGame<String>
+    @Published var game: MemoryGame<String>
     @Published var currentSelectedTheme: Theme
     
-    init() {
-        currentSelectedTheme = .vehicles
-        model = MemoryGameViewModel.createMemoryGame(theme: .vehicles)
+    init(
+        theme: Theme,
+        game: MemoryGame<String>
+    ) {
+        currentSelectedTheme = theme
+        self.game = game
     }
     
-    private static func createMemoryGame(theme: Theme) -> MemoryGame<String> {
+    // MARK: - Actions
+    
+    func choose(_ card: Card) {
+        game.choose(card)
+    }
+    
+    func changeTheme(to theme: Theme) {
+        currentSelectedTheme = theme
+        game = MemoryGameViewModel.createMemoryGame(theme: theme)
+    }
+}
+
+extension MemoryGameViewModel {
+    static func createMemoryGame(theme: Theme) -> MemoryGame<String> {
         let emojis = theme.emojis.shuffled()
         let numberOfPairs = Int.random(in: theme.pairRange)
         
@@ -31,18 +47,10 @@ class MemoryGameViewModel: ObservableObject {
         }
     }
     
-    var cards: Array<Card> {
-        model.cards
-    }
-    
-    // MARK: - Intents
-    
-    func choose(_ card: Card) {
-        model.choose(card)
-    }
-    
-    func changeTheme(to theme: Theme) {
-        currentSelectedTheme = theme
-        model = MemoryGameViewModel.createMemoryGame(theme: theme)
+    static func make() -> MemoryGameViewModel {
+        .init(
+            theme: .vehicles,
+            game:  MemoryGameViewModel.createMemoryGame(theme: .vehicles)
+        )
     }
 }
