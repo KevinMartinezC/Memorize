@@ -16,11 +16,30 @@ struct MemorizeView: View {
                 .font(.largeTitle)
                 .bold()
             
+            Text(viewModel.currentSelectedTheme.name)
+                .font(.title2)
+                .foregroundStyle(viewModel.currentSelectedTheme.color)
+            
+            Text("Score: \(viewModel.game.score)")
+                .font(.title3)
+                .padding(.bottom,8)
+            
             ScrollView{
                 cards
             }
             
-            themeButtons
+            Button(action: {
+                viewModel.newGame()
+            }) {
+                Text("New Game")
+                    .font(.headline)
+                    .padding(.horizontal, 40)
+                    .padding(.vertical, 12)
+                    .background(viewModel.currentSelectedTheme.color)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            }
+            .padding()
         }
         .padding()
     }
@@ -40,18 +59,5 @@ struct MemorizeView: View {
             }
         }
         .foregroundStyle(viewModel.currentSelectedTheme.color)
-    }
-    
-    var themeButtons: some View {
-        HStack {
-            ForEach(Theme.allCases, id: \.self) { theme in
-                ThemeButton(
-                    theme: theme,
-                    isSelected: viewModel.currentSelectedTheme == theme
-                ) {
-                    viewModel.changeTheme(to: theme)
-                }
-            }
-        }
     }
 }

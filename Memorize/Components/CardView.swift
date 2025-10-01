@@ -5,7 +5,6 @@
 //  Created by KevinMartinez on 9/28/25.
 //
 
-
 import SwiftUI
 
 struct CardView: View {
@@ -26,6 +25,7 @@ struct CardView: View {
             .opacity(card.isFaceUp ? 1 : 0)
             base.fill().opacity(card.isFaceUp ? 0 : 1)
         }
+        .opacity(card.isMatched ? 0 : 1)
     }
 }
 

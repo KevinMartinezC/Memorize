@@ -27,6 +27,12 @@ class MemoryGameViewModel: ObservableObject {
         game.choose(card)
     }
     
+    func newGame() {
+        let theme = Theme.random()
+        currentSelectedTheme = theme
+        game = MemoryGameViewModel.createMemoryGame(theme: theme)
+    }
+    
     func changeTheme(to theme: Theme) {
         currentSelectedTheme = theme
         game = MemoryGameViewModel.createMemoryGame(theme: theme)
@@ -36,7 +42,7 @@ class MemoryGameViewModel: ObservableObject {
 extension MemoryGameViewModel {
     static func createMemoryGame(theme: Theme) -> MemoryGame<String> {
         let emojis = theme.emojis.shuffled()
-        let numberOfPairs = Int.random(in: theme.pairRange)
+        let numberOfPairs = theme.numberOfPairs
         
         return MemoryGame(numberOfPairsOfCards: numberOfPairs) { pairIndex in
             if emojis.indices.contains(pairIndex) {
@@ -48,9 +54,10 @@ extension MemoryGameViewModel {
     }
     
     static func make() -> MemoryGameViewModel {
-        .init(
-            theme: .vehicles,
-            game:  MemoryGameViewModel.createMemoryGame(theme: .vehicles)
+        let theme = Theme.random()
+        return .init(
+            theme: theme,
+            game: MemoryGameViewModel.createMemoryGame(theme: theme)
         )
     }
 }

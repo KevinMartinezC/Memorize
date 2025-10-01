@@ -10,21 +10,16 @@ import SwiftUI
 import Combine
 
 enum Theme: CaseIterable {
-    case vehicles, animals, food
+    case vehicles, animals, food, sports, nature, weather
     
     var name: String {
         switch self {
         case .vehicles: return "Vehicles"
         case .animals: return "Animals"
         case .food: return "Food"
-        }
-    }
-    
-    var sfSymbol: String {
-        switch self {
-        case .vehicles: return "car.fill"
-        case .animals: return "pawprint.fill"
-        case .food: return "fork.knife"
+        case .sports: return "Sports"
+        case .weather: return "Weather"
+        case .nature: return "Nature"
         }
     }
     
@@ -33,6 +28,9 @@ enum Theme: CaseIterable {
         case .vehicles: return .blue
         case .animals: return .green
         case .food: return .red
+        case .sports: return .yellow
+        case .weather: return .purple
+        case .nature: return .orange
         }
     }
     
@@ -41,17 +39,30 @@ enum Theme: CaseIterable {
         case .vehicles:
             return ["🚗", "🚕", "🚙", "🚌", "🚎", "🏎️", "🚓", "🚑", "🚒", "🚐", "🛻", "🚚"]
         case .animals:
-            return ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯"]
+            return ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯", "🦁", "🐮"]
         case .food:
-            return ["🍎", "🍌", "🍇", "🍓", "🍒", "🥝", "🍑", "🥭"]
+            return ["🍎", "🍌", "🍇", "🍓", "🍒", "🥝", "🍑", "🥭", "🍉", "🍊"]
+        case .sports:
+            return ["⚽️", "🏀", "🏈", "⚾️", "🎾", "🏐", "🏉", "🎱", "🏓", "🏸"]
+        case .nature:
+            return ["🌸", "🌺", "🌻", "🌷", "🌹", "🌼", "🌲", "🌳", "🌴", "🌵"]
+        case .weather:
+            return ["☀️", "🌙", "⭐️", "⛅️", "⛈️", "🌤️", "🌧️", "❄️", "🌈", "⚡️"]
         }
     }
     
-    var pairRange: ClosedRange<Int>{
+    var numberOfPairs: Int {
         switch self {
-        case .vehicles: return 4...6
-        case .animals: return 5...8
-        case .food: return 3...6
+        case .vehicles: return 6
+        case .animals: return 8
+        case .food: return 5
+        case .sports: return 7
+        case .nature: return 6
+        case .weather: return 8
         }
+    }
+    
+    static func random() -> Theme {
+        Theme.allCases.randomElement()!
     }
 }
