@@ -10,6 +10,10 @@ import SwiftUI
 struct CardView: View {
     let card: MemoryGame<String>.Card
     
+    init(card: MemoryGame<String>.Card) {
+        self.card = card
+    }
+    
     var body: some View {
         ZStack {
             let base = RoundedRectangle(cornerRadius: 12)

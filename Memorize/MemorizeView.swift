@@ -26,6 +26,7 @@ struct MemorizeView: View {
             
             ScrollView{
                 cards
+                    .animation(.default, value: viewModel.game.cards)
             }
             
             Button(action: {
