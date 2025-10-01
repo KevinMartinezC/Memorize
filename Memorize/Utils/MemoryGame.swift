@@ -19,16 +19,15 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
             }
             if faceUpCardIndices.count == 1 {
                 return faceUpCardIndices.first
-            }else {
+            } else {
                 return nil
             }
-            
         }
-        set{
+        set {
             for index in cards.indices {
                 if index == newValue {
                     cards[index].isFaceUp = true
-                }else {
+                } else {
                     cards[index].isFaceUp = false
                 }
             }
@@ -50,16 +49,26 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         if let chosenIndex = cards.firstIndex(where: {$0.id == card.id}){
             if !cards[chosenIndex].isFaceUp, !cards[chosenIndex].isMatched {
                 if let pontentialMatchIndex = indexOfTheOneAndOnlyFaceUpCard {
-                    // There's ONE card face up, we're choosing the SECOND
-                    // Check for match
+                    // Second card chosen - check for match
                     if cards[pontentialMatchIndex].content == cards[chosenIndex].content {
                         cards[chosenIndex].isMatched = true
                         cards[pontentialMatchIndex].isMatched = true
+                        score += 2  // Add points for match
+                    } else {
+                        // No match
+                        // Penalty if either card has been seen before
+                        if cards[chosenIndex].hasBeenSeen {
+                            score -= 1
+                        }
+                        if cards[pontentialMatchIndex].hasBeenSeen {
+                            score -= 1
+                        }
                     }
-                    // DON'T set indexOfTheOneAndOnlyFaceUpCard here!
-                    // This allows both cards to stay visible
+                    // Mark both cards as seen
+                    cards[chosenIndex].hasBeenSeen = true
+                    cards[pontentialMatchIndex].hasBeenSeen = true
                 } else {
-                    // There are 0 or 2 cards face up, flip them all down and show only this one
+                    // First card or third card
                     indexOfTheOneAndOnlyFaceUpCard = chosenIndex
                 }
                 cards[chosenIndex].isFaceUp = true
@@ -70,6 +79,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     struct Card: Equatable, Identifiable {
         var isFaceUp = false
         var isMatched = false
+        var hasBeenSeen = false 
         let content: CardContent
         let id: String
     }
